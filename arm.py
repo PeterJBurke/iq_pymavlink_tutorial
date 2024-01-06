@@ -11,6 +11,10 @@ def arm(mav_connection, arm_command):
     mav_connection.mav.command_long_send(mav_connection.target_system, mav_connection.target_component,
                                          mavutil.mavlink.MAV_CMD_COMPONENT_ARM_DISARM, 0, arm_command, 0, 0, 0, 0, 0, 0)
 
+    mav_connection.mav.command_long_send(mav_connection.target_system, mav_connection.target_component,
+                                         mavutil.mavlink., 0, arm_command, 0, 0, 0, 0, 0, 0)
+
+
     msg = mav_connection.recv_match(type='COMMAND_ACK', blocking=True)
     print(msg)
 
