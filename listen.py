@@ -2,10 +2,13 @@ from pymavlink import mavutil
 import time
 
 # Start a connection listening to a UDP port
-the_connection = mavutil.mavlink_connection('192.168.1.229:14555')
+the_connection = mavutil.mavlink_connection('192.168.1.124:14559')
+
 # Wait for the first heartbeat
 #   This sets the system and component ID of remote system for the link
+print('initiating connection')
 the_connection.wait_heartbeat()
+print('did initiate connection')
 print("Heartbeat from system (system %u component %u)" %
       (the_connection.target_system, the_connection.target_component))
 
@@ -20,6 +23,12 @@ while True:
       message_id = msg.get_msgId()
 #      print(f"Received MAVLink message - Type: {message_type}, ID: {message_id}")
 #      print(f"{message_type}, {message_id}")
+
+
+      if msg.get_type() == 'GLOBAL_POSITION_INT':
+            lat = msg.lat / 1e7  # Latitude in degrees
+            lon = msg.lon / 1e7  # Longitude in degrees
+            print(f"Latitude: {lat}, Longitude: {lon}")
 
       message_count += 1
       #print(msg)
