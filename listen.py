@@ -2,11 +2,44 @@ from pymavlink import mavutil
 import time
 
 # Start a connection listening to a UDP port
-the_connection = mavutil.mavlink_connection('192.168.1.124:14559')
+#the_connection = mavutil.mavlink_connection('192.168.1.158:14555')
+the_connection = mavutil.mavlink_connection('192.168.1.124:14555')
+#the_connection = mavutil.mavlink_connection('127.0.0.1:14555')
+#the_connection = mavutil.mavlink_connection('localhost:14558')
+#the_connection = mavutil.mavlink_connection('172.16.86.224:14559')
+#the_connection = mavutil.mavlink_connection('52.13.24.228:14558')
+#the_connection = mavutil.mavlink_connection('10.50.20.6:61545')
+#the_connection = mavutil.mavlink_connection('172.16.1.16:55180')
+
+#the_connection = mavutil.mavlink_connection('172.16.1.16:14550')
+
+#the_connection = mavutil.mavlink_connection('0.0.0.0:14558')
+# 52.13.24.228.14558 from sudo tcpdump -n udp port 14558 -X  gives lots of packets in terminal
+#the_connection = mavutil.mavlink_connection('10.50.20.6:14558')
+#the_connection = mavutil.mavlink_connection('udpout:52.13.24.228:14558')
+#the_connection = mavutil.mavlink_connection('udpout:ec2-52-13-24-228.us-west-2.compute.amazonaws.com:14558')
+#the_connection = mavutil.mavlink_connection('udpout:52.13.24.228:14558')
+#the_connection = mavutil.mavlink_connection('udpout:127.0.0.1:14558')
+
+try:
+      # Receive a message
+      msg = the_connection.recv_msg()
+      
+      if msg:
+            print(f"Received message: {msg}")
+      
+      # Send a message (example: HEARTBEAT)
+      # master.mav.heartbeat_send(type=6, autopilot=8, base_mode=0, custom_mode=0, system_status=3)
+
+except Exception as e:
+      print(f"Error: {e}")
+
 
 # Wait for the first heartbeat
 #   This sets the system and component ID of remote system for the link
+print('initiating connection')
 the_connection.wait_heartbeat()
+print('did initiate connection')
 print("Heartbeat from system (system %u component %u)" %
       (the_connection.target_system, the_connection.target_component))
 
@@ -21,6 +54,12 @@ while True:
       message_id = msg.get_msgId()
 #      print(f"Received MAVLink message - Type: {message_type}, ID: {message_id}")
 #      print(f"{message_type}, {message_id}")
+
+
+      if msg.get_type() == 'GLOBAL_POSITION_INT':
+            lat = msg.lat / 1e7  # Latitude in degrees
+            lon = msg.lon / 1e7  # Longitude in degrees
+            print(f"Latitude: {lat}, Longitude: {lon}")
 
       message_count += 1
       #print(msg)
