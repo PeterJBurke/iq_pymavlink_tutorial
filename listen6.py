@@ -1,11 +1,12 @@
 import socket
+from config import MAVLINK_HOST, MAVLINK_PORT
 
 # Create a UDP socket
 udp_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
 # Bind the socket to a specific address and port
-host = '127.0.0.1'
-port = 12345
+host = MAVLINK_HOST
+port = MAVLINK_PORT
 udp_socket.bind((host, port))
 
 # Set a timeout for the socket

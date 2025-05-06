@@ -1,5 +1,6 @@
 import socket
 import time
+from config import MAVLINK_PORT
 
 def receive_udp_messages(port):
     with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as udp_socket:
@@ -23,5 +24,4 @@ def receive_udp_messages(port):
                 start_time = time.time()
 
 if __name__ == "__main__":
-    UDP_PORT = 14559  # Change this to the desired UDP port
-    receive_udp_messages(UDP_PORT)
+    receive_udp_messages(MAVLINK_PORT)

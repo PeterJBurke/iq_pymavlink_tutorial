@@ -1,8 +1,7 @@
 import socket
 import time
 from pymavlink import mavutil
-import time
-
+from config import CONNECTION_STRING
 
 def receive_mavlink_messages(port):
     print(f"Listening for mavlink messages on port {port}...")
@@ -26,9 +25,8 @@ def receive_mavlink_messages(port):
             start_time = time.time()
 
 if __name__ == "__main__":
-    UDP_PORT = 14559  # Change this to the desired UDP port
     # Start a connection listening to a UDP port
-    the_connection = mavutil.mavlink_connection('192.168.1.124:14559')
+    the_connection = mavutil.mavlink_connection(CONNECTION_STRING)
 
     # Wait for the first heartbeat
     #   This sets the system and component ID of remote system for the link
@@ -37,4 +35,4 @@ if __name__ == "__main__":
         (the_connection.target_system, the_connection.target_component))
     current_time_seconds =  time.time()
 
-    receive_mavlink_messages(UDP_PORT)
+    receive_mavlink_messages(MAVLINK_PORT)

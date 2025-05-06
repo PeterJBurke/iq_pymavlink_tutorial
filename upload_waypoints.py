@@ -5,6 +5,7 @@ from typing import Dict, Optional
 from pymavlink import mavutil
 from utilities.connect_to_sysid import connect_to_sysid 
 from utilities.get_autopilot_info import get_autopilot_info
+from config import CONNECTION_STRING
 
 
 def upload_qgc_mission(mission_file: str, the_connection: mavutil.mavlink_connection, sysid: int = 1) -> Optional[bool]:
@@ -172,7 +173,7 @@ if __name__ == '__main__':
                         help='Path to the mission file.')
 
     # Add address argument
-    parser.add_argument('--address', type=str, default='udpin:localhost:14551',
+    parser.add_argument('--address', type=str, default=CONNECTION_STRING,
                         help='The address and port to connect to.')
     
     # Parse the arguments
@@ -184,7 +185,6 @@ if __name__ == '__main__':
     # Wait for the first heartbeat
     the_connection.wait_heartbeat()
     print(f"Heartbeat from system (system {the_connection.target_system} component {the_connection.target_component})")
-
 
     # Upload the mission to the UAV
     upload_qgc_mission(args.mission_file, the_connection)
