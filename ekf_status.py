@@ -1,7 +1,8 @@
 from pymavlink import mavutil
+from config import CONNECTION_STRING
 
 # Start a connection listening to a UDP port
-the_connection = mavutil.mavlink_connection('udpin:localhost:14551')
+the_connection = mavutil.mavlink_connection(CONNECTION_STRING)
 
 
 for value in mavutil.mavlink.enums['EKF_STATUS_FLAGS']:

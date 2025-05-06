@@ -1,6 +1,7 @@
 import argparse
 from pymavlink import mavutil
 from typing import Any
+from config import CONNECTION_STRING
 
 
 def land(the_connection: mavutil.mavlink_connection, timeout: int = 10) -> int:
@@ -35,7 +36,7 @@ def land(the_connection: mavutil.mavlink_connection, timeout: int = 10) -> int:
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--connection_string', default='udpin:localhost:14551', help='Connection string for MAVLink.')
+    parser.add_argument('--connection_string', default=CONNECTION_STRING, help='Connection string for MAVLink.')
     parser.add_argument('--timeout', type=int, default=10, help='Timeout in seconds to wait for a command acknowledgment.')
     args = parser.parse_args()
 

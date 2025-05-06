@@ -2,6 +2,7 @@ import argparse
 from math import radians
 from pymavlink import mavutil
 from utilities.get_autopilot_info import get_autopilot_info
+from config import CONNECTION_STRING
 
 def mavlink_connect(connection_str: str):
     """Connects to a MAVLink client.
@@ -79,7 +80,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(
         description="Set speed and yaw of a MAVLink client"
     )
-    parser.add_argument("--connection", type=str, default="udpin:localhost:14551", help="The connection string to the MAVLink client")
+    parser.add_argument("--connection", type=str, default=CONNECTION_STRING, help="The connection string to the MAVLink client")
     parser.add_argument("--speed", type=float, default=None, help="The speed to set")
     parser.add_argument("--yaw", type=float, default=None, help="The yaw angle to set")
     parser.add_argument("--yaw-rate", type=float, default=30, help="The yaw rate to set")

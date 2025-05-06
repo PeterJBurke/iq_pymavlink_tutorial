@@ -4,6 +4,7 @@ from pymavlink import mavutil
 from utilities.connect_to_sysid import connect_to_sysid
 from utilities.wait_for_position_aiding import wait_until_position_aiding
 from utilities.get_autopilot_info import get_autopilot_info
+from config import CONNECTION_STRING
 
 
 def takeoff(mav_connection, takeoff_altitude: float, tgt_sys_id: int = 1, tgt_comp_id=1):
@@ -60,9 +61,8 @@ def main():
     parser.add_argument("--altitude", type=int, help="Altitude for the UAV to reach upon takeoff.", default=10)
     parser.add_argument("--sysid", type=int, help="System ID of the UAV to command.", default=1)
 
-
     args = parser.parse_args()
-    mav_connection = connect_to_sysid('udpin:localhost:14551', args.sysid)
+    mav_connection = connect_to_sysid(CONNECTION_STRING, args.sysid)
     takeoff(mav_connection, args.altitude)
 
 if __name__ == "__main__":

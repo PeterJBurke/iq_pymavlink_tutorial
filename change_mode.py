@@ -2,6 +2,7 @@ import sys
 from pymavlink import mavutil
 from utilities.connect_to_sysid import connect_to_sysid
 import argparse
+from config import CONNECTION_STRING
 
 main_mode_mapping_px4 = {
     'MANUAL': 0,
@@ -56,7 +57,7 @@ if __name__ == '__main__':
     parser.add_argument("--sysid", type=int, default=1)
     args = parser.parse_args()
 
-    master = connect_to_sysid('udpin:localhost:14551', args.sysid)
+    master = connect_to_sysid(CONNECTION_STRING, args.sysid)
     
     # wait for the heartbeat msg to find the system ID
     master.wait_heartbeat()
